@@ -20,7 +20,7 @@ export const createPost = createAsyncThunk(
 const postSlices = createSlice({
   name: "Post",
   initialState: {
-    loading: true,
+    loading: false,
     post: null,
     error: null,
   },

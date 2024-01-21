@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import "./Post.css";
 import { BiComment, BiLike } from "react-icons/bi";
 import { BiSolidLike } from "react-icons/bi";
-import { FaComment } from "react-icons/fa";
 import { CgMoreVertical } from "react-icons/cg";
 import { MdDelete } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,10 +15,12 @@ import toast from "react-hot-toast";
 import { getPostsOfFollowingUser } from "../../redux/slices/getPostOfFollowingUsers";
 import User from "../User/User";
 import CommentCard from "../CommentCard/CommentCard";
+import { getAllMyPosts } from "../../redux/slices/getMyPostsSlices";
+import { updateCaption } from "../../redux/slices/updateCaptionSlices";
 
 const Post = ({
   postId,
-  caption,
+  captions,
   postImage,
   likes = [],
   comments = [],
@@ -33,36 +34,54 @@ const Post = ({
   const [likesUser, setLikesUser] = useState(false);
   const [comment, setComment] = useState("");
   const [commentToggle, setCommentToggle] = useState(false);
-
+  const [caption, setCaption] = useState(captions);
+  const [captionToggle, setCaptionToggle] = useState(false);
   const dispatch = useDispatch();
-
   const { message } = useSelector((state) => state.messages);
   const { user } = useSelector((state) => state.auth);
 
+  // Like Or Unlike the posts handler
   const handleLike = async () => {
     setLiked(!liked);
     dispatch(likeAndDislike(postId));
     if (isAccount) {
-      console.log("MY ACCOUNT");
+      dispatch(getAllMyPosts());
     } else {
       await dispatch(getPostsOfFollowingUser());
     }
     toast.success(message);
   };
 
+  // Add or Update Comment Handler
   const addCommentHandler = async (event) => {
     event.preventDefault();
     console.log(postId);
     console.log(comment);
     await dispatch(commentOnPost({ postId, comment }));
     if (isAccount) {
-      console.log("MY ACCOUNT");
+      dispatch(getAllMyPosts());
     } else {
       dispatch(getPostsOfFollowingUser());
     }
     toast.success(message);
   };
 
+  // Update Caption Handler
+  const updateCaptionHandler = async (e) => {
+    e.preventDefault();
+    await dispatch(updateCaption({ postId, caption }));
+    toast.success("Caption Upated Successfully");
+    dispatch(getAllMyPosts());
+  };
+
+  // Delete Post Handler
+  const deletePostHandler = (e) => {
+    e.preventDefault();
+    console.log("Post deleted");
+    toast.error("Currently this function is not available right now...");
+  };
+
+  // UseEffect
   useEffect(() => {
     likes.forEach((item) => {
       if (item._id === user._id) {
@@ -76,7 +95,7 @@ const Post = ({
       <div className="post">
         <div className="postHeader">
           {isAccount ? (
-            <Button>
+            <Button onClick={() => setCaptionToggle(true)}>
               <CgMoreVertical />
             </Button>
           ) : null}
@@ -96,7 +115,7 @@ const Post = ({
             color={"#000"}
             style={{ alignSelf: "center" }}
           >
-            {caption}
+            {captions}
           </Typography>
         </div>
         <Button
@@ -118,7 +137,9 @@ const Post = ({
           <Button onClick={() => setCommentToggle(true)}>
             <BiComment />
           </Button>
-          <Button>{isAccount ? <MdDelete /> : null}</Button>
+          <Button onClick={deletePostHandler}>
+            {isDeleted ? <MdDelete /> : null}
+          </Button>
         </div>
         <Dialog open={likesUser} onClose={() => setLikesUser(!likesUser)}>
           <div className="DialogBox">
@@ -134,7 +155,6 @@ const Post = ({
               ))}
           </div>
         </Dialog>
-
         <Dialog
           open={commentToggle}
           onClose={() => setCommentToggle(!commentToggle)}
@@ -166,6 +186,26 @@ const Post = ({
                   isAccount={isAccount}
                 />
               ))}
+          </div>
+        </Dialog>
+        <Dialog
+          open={captionToggle}
+          onClose={() => setCaptionToggle(!captionToggle)}
+        >
+          <div className="DialogBox">
+            <Typography variant="h4">Update Your Caption</Typography>
+            <form className="commentForm" onSubmit={updateCaptionHandler}>
+              <input
+                type="text"
+                placeholder="Update Your Caption"
+                value={caption}
+                onChange={(e) => setCaption(e.target.value)}
+                required
+              />
+              <Button type="submit" variant="contained">
+                Update
+              </Button>
+            </form>
           </div>
         </Dialog>
       </div>

@@ -13,20 +13,24 @@ export const likeAndDislike = createAsyncThunk(
   }
 );
 
-
 // Async Thunk for Comment on the post
 export const commentOnPost = createAsyncThunk(
   "Messages/comment",
-  async ({postId, comment}) => {
+  async ({ postId, comment }) => {
     try {
-      const response = await axios.put(`${server}/post/comment/${postId}`, { comment }, { withCredentials: true });
+      const response = await axios.put(
+        `${server}/post/comment/${postId}`,
+        { comment },
+        { withCredentials: true }
+      );
       return response.data;
     } catch (error) {
-      throw error.response ? error.response.data : { message: 'Unknown error occurred' };
+      throw error.response
+        ? error.response.data
+        : { message: "Unknown error occurred" };
     }
   }
 );
-
 
 // Async Thunk for deleting the comment on the post
 export const deleteCommentFromPost = createAsyncThunk(
@@ -39,12 +43,12 @@ export const deleteCommentFromPost = createAsyncThunk(
       });
       return response.data;
     } catch (error) {
-      throw error.response ? error.response.data : { message: 'Unknown error occurred' };
+      throw error.response
+        ? error.response.data
+        : { message: "Unknown error occurred" };
     }
   }
 );
-
-
 
 const messageSlices = createSlice({
   name: "Message",
@@ -71,7 +75,6 @@ const messageSlices = createSlice({
       state.error = action.error.message;
     });
 
-    
     // For comment on the post
     builder.addCase(commentOnPost.pending, (state, action) => {
       state.loading = true;
@@ -87,8 +90,7 @@ const messageSlices = createSlice({
       state.loading = false;
       state.message = "";
       state.error = action.error.message;
-    })
-
+    });
 
     // For Deleting Comments From the post
     builder.addCase(deleteCommentFromPost.pending, (state, action) => {
@@ -105,7 +107,7 @@ const messageSlices = createSlice({
       state.loading = false;
       state.message = "";
       state.error = action.error.message;
-    })
+    });
   },
 });
 

@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./NewPost.css";
 import { Button, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../redux/slices/postSlices";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { getAllMyPosts } from "../../redux/slices/getMyPostsSlices";
 
 const NewPost = () => {
   const [image, setImage] = useState(null);
   const [caption, setCaption] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { loading, error } = useSelector((state) => state.post);
+
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     const Reader = new FileReader();
@@ -19,10 +26,19 @@ const NewPost = () => {
     };
   };
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    dispatch(createPost({ caption, image }));
+    await dispatch(createPost({ caption, image }));
+    toast.success("Post Created Successfully");
+    dispatch(getAllMyPosts());
+    navigate("/account");
   };
+
+  useEffect(() => {
+    if (error) {
+      toast.error("Payload is too large...please try with different image");
+    }
+  }, [error]);
 
   return (
     <>
@@ -39,7 +55,9 @@ const NewPost = () => {
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
           />
-          <Button type="submit">Post</Button>
+          <Button type="submit" disabled={loading}>
+            {loading ? "Processing" : "Post"}
+          </Button>
         </form>
       </div>
     </>

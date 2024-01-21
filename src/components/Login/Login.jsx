@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/slices/authSlices";
 import toast from "react-hot-toast";
+import { Button } from "@mui/material";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -44,7 +45,7 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <NavLink to={"/forget/password"}>Forget Password</NavLink>
-          <button type="submit">Login</button>
+          <Button type="submit">Login</Button>
           <NavLink to={"/register"}>Don't Have an account??</NavLink>
         </form>
       </div>

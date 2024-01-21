@@ -5,12 +5,14 @@ import { getAllMyPosts } from "../../redux/slices/getMyPostsSlices";
 import Loader from "../Loader/Loader";
 import Post from "../Post/Post";
 import { Avatar, Button, Dialog, Typography } from "@mui/material";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import User from "../User/User";
 import { logoutUser } from "../../redux/slices/authSlices";
+import toast from "react-hot-toast";
 
 const Account = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { posts, loading } = useSelector((state) => state.myPosts);
   const { user, loading: userLoading } = useSelector((state) => state.auth);
   const [followersToggle, setFollowersToggle] = useState(false);
@@ -18,8 +20,10 @@ const Account = () => {
 
   const handleLogout = (event) => {
     event.preventDefault();
-    dispatch(logoutUser())
-  }
+    dispatch(logoutUser());
+    navigate("/login");
+    toast.success("user logged out successfully")
+  };
 
   useEffect(() => {
     dispatch(getAllMyPosts());
@@ -37,7 +41,7 @@ const Account = () => {
                 <Post
                   key={post._id}
                   postId={post._id}
-                  caption={post.caption}
+                  captions={post.caption}
                   postImage={post.image.url}
                   likes={post.likes}
                   comments={post.comments}
@@ -45,6 +49,7 @@ const Account = () => {
                   ownerName={post.owner.name}
                   ownerId={post.owner._id}
                   isAccount="true"
+                  isDeleted="true"
                 />
               ))
             ) : (
@@ -78,7 +83,9 @@ const Account = () => {
                 </Button>
                 <Typography>{user.posts.length}</Typography>
               </div>
-              <Button variant="contained" onClick={handleLogout}>Logout</Button>
+              <Button variant="contained" onClick={handleLogout}>
+                Logout
+              </Button>
               <NavLink to={"/update/profile"}>Edit Profile</NavLink>
               <NavLink to={"/update/password"}>Change Password</NavLink>
               <Button variant="text" sx={{ margin: "2vmax", color: "red" }}>

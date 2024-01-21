@@ -18,10 +18,10 @@ export const loginUser = createAsyncThunk(
 // Register User
 export const registerUser = createAsyncThunk(
   "auth/register",
-  async (userdata) => {
+  async ({ name, email, password, avatar }) => {
     const { data } = await axios.post(
       `${server}/register`,
-      { userdata },
+      { name, email, password, avatar },
       { withCredentials: true }
     );
     return data;
@@ -34,11 +34,10 @@ export const getMyProfile = createAsyncThunk("user/profile", async () => {
   return data.user;
 });
 
-
 // Async Thunk For Loggout user
 export const logoutUser = createAsyncThunk("Messages/logout", async () => {
-  const { data } = await axios.post(`${server}/logout`);
-  return data
+  const { data } = await axios.get(`${server}/logout`,{withCredentials:true});
+  return data;
 });
 
 const authSlice = createSlice({
@@ -71,7 +70,6 @@ const authSlice = createSlice({
         console.error(action.error.message);
       })
 
-      
       // Register User
       .addCase(registerUser.pending, (state) => {
         state.loading = true;
@@ -113,7 +111,6 @@ const authSlice = createSlice({
         state.error = action.error.message;
         console.error(action.error.message);
       })
-
 
       // Logout User
       .addCase(logoutUser.pending, (state) => {

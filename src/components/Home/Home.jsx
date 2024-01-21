@@ -33,7 +33,7 @@ const Home = () => {
                 <Post
                   key={post._id}
                   postId={post._id}
-                  caption={post.caption}
+                  captions={post.caption}
                   postImage={post.image.url}
                   likes={post.likes}
                   comments={post.comments}
