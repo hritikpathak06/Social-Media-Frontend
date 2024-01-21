@@ -3,7 +3,7 @@ import "./Register.css";
 import { Avatar, Button, Typography } from "@mui/material";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { registerUser } from "../../redux/slices/authSlices";
+import { getMyProfile, registerUser } from "../../redux/slices/authSlices";
 import toast from "react-hot-toast";
 
 const Register = () => {
@@ -28,10 +28,10 @@ const Register = () => {
     };
   };
 
-  
   const handleRegister = (e) => {
     e.preventDefault();
     dispatch(registerUser({ name, email, password, avatar }));
+    dispatch(getMyProfile());
     if (error) {
       toast.error("Something went wrong");
     }

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./Login.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../../redux/slices/authSlices";
+import { getMyProfile, loginUser } from "../../redux/slices/authSlices";
 import toast from "react-hot-toast";
 import { Button } from "@mui/material";
 
@@ -15,6 +15,7 @@ const Login = () => {
   const handleLogin = (event) => {
     event.preventDefault();
     dispatch(loginUser({ email, password }));
+    dispatch(getMyProfile());
   };
   useEffect(() => {
     if (isAuthenticated) {

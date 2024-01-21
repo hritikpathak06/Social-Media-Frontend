@@ -12,6 +12,15 @@ export const getAllMyPosts = createAsyncThunk(
     }
 )
 
+// Async Thunk For Getting User Posts
+export const getUserPosts = createAsyncThunk(
+    "user/posts",
+    async({id}) => {
+     const {data} = await axios.get(`${server}/userposts/${id}`,{withCredentials:true});
+     return data.posts
+    }
+)
+
 
 const getMyPostSlices = createSlice({
     name:"myposts",
@@ -33,6 +42,22 @@ const getMyPostSlices = createSlice({
             state.error = null;
         })
         .addCase(getAllMyPosts.rejected,(state,action) => {
+            state.loading = false;
+            state.posts = null;
+            state.error = action.error.message
+        })
+
+        .addCase(getUserPosts.pending,(state) => {
+            state.loading = true;
+            state.posts = null;
+            state.error = null;
+        })
+        .addCase(getUserPosts.fulfilled,(state,action) => {
+            state.loading = false;
+            state.posts = action.payload;
+            state.error = null;
+        })
+        .addCase(getUserPosts.rejected,(state,action) => {
             state.loading = false;
             state.posts = null;
             state.error = action.error.message

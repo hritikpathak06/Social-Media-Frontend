@@ -16,27 +16,27 @@ const Header = () => {
     <>
       <div className="header">
         <NavLink to={"/"} onClick={() => setTab("/")}>
-          {tab === "/" ? <FaHome style={{ color: "black" }} /> : <MdHome />}
+          {tab === "/" ? <FaHome style={{ color: "#fff" }} /> : <MdHome style={{color:"#fff"}} />}
         </NavLink>
         <NavLink to={"/newpost"} onClick={() => setTab("/newpost")}>
           {tab === "/newpost" ? (
-            <IoIosAdd style={{ color: "black" }} />
+            <IoIosAdd style={{ color: "#fff" }} />
           ) : (
-            <IoMdAdd />
+            <IoMdAdd style={{color:"#fff"}} />
           )}
         </NavLink>
         <NavLink to={"/search"} onClick={() => setTab("/search")}>
           {tab === "/search" ? (
-            <FaSearch style={{ color: "black" }} />
+            <FaSearch style={{ color: "#fff" }} />
           ) : (
-            <IoSearch />
+            <IoSearch style={{color:"#fff"}} />
           )}
         </NavLink>
         <NavLink to={"/account"} onClick={() => setTab("/account")}>
           {tab === "/account" ? (
-            <MdAccountCircle style={{ color: "black" }} />
+            <MdAccountCircle style={{ color: "#fff" }} />
           ) : (
-            <RiAccountPinCircleFill />
+            <RiAccountPinCircleFill style={{color:"#fff"}}/>
           )}
         </NavLink>
       </div>

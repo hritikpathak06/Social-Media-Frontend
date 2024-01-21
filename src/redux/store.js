@@ -6,6 +6,7 @@ import messageSlices from "./slices/messageSlices";
 import getMyPostsSlices from "./slices/getMyPostsSlices";
 import postSlices from "./slices/postSlices";
 import updateCaptionSlices from "./slices/updateCaptionSlices";
+import userProfileSlices from "./slices/getUserSlices"
 
 const store = configureStore({
     reducer:{
@@ -15,7 +16,8 @@ const store = configureStore({
       messages:messageSlices,
       myPosts:getMyPostsSlices,
       post:postSlices,
-      caption:updateCaptionSlices
+      caption:updateCaptionSlices,
+      userProfile:userProfileSlices
     }
 });
 

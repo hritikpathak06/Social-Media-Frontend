@@ -1,34 +1,53 @@
 import React, { useEffect, useState } from "react";
-import "./Account.css";
+import "../Account/Account.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllMyPosts } from "../../redux/slices/getMyPostsSlices";
+import { getUserPosts } from "../../redux/slices/getMyPostsSlices";
 import Loader from "../Loader/Loader";
 import Post from "../Post/Post";
 import { Avatar, Button, Dialog, Typography } from "@mui/material";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import User from "../User/User";
-import { logoutUser } from "../../redux/slices/authSlices";
+import { getUserProfile } from "../../redux/slices/getUserSlices";
+import { followUnfollowUser } from "../../redux/slices/updateCaptionSlices";
 import toast from "react-hot-toast";
 
-const Account = () => {
+const UserProfile = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { id } = useParams();
   const { posts, loading } = useSelector((state) => state.myPosts);
-  const { user, loading: userLoading } = useSelector((state) => state.auth);
+  const { user, loading: userLoading } = useSelector(
+    (state) => state.userProfile
+  );
+  const { user: myself } = useSelector((state) => state.auth);
+  const { message } = useSelector((state) => state.caption);
+
   const [followersToggle, setFollowersToggle] = useState(false);
   const [followingToggle, setFollowingToggle] = useState(false);
+  const [following, setFollowing] = useState(false);
+  const [myProfile, setMyprofile] = useState(false);
 
-  // Handle Logout
-  const handleLogout = (event) => {
-    event.preventDefault();
-    dispatch(logoutUser());
-    navigate("/login");
-    toast.success("user logged out successfully");
+  const followHanlder = async (e) => {
+    e.preventDefault();
+    setFollowing(!following);
+    await dispatch(followUnfollowUser({ id }));
+    dispatch(getUserProfile({ id }));
+    toast.success(message);
   };
 
   useEffect(() => {
-    dispatch(getAllMyPosts());
-  }, [dispatch]);
+    dispatch(getUserProfile({ id }));
+    dispatch(getUserPosts({ id }));
+    if (myself._id === id) {
+      setMyprofile(true);
+    }
+    if (user) {
+      user.followers.forEach((item) => {
+        if (item._id === myself._id) {
+          setFollowing(true);
+        }
+      });
+    }
+  }, [dispatch, id, myself._id]);
 
   return (
     <>
@@ -49,12 +68,10 @@ const Account = () => {
                   ownerImage={post.owner.avatar.url}
                   ownerName={post.owner.name}
                   ownerId={post.owner._id}
-                  isAccount="true"
-                  isDeleted="true"
                 />
               ))
             ) : (
-              <p>sorry</p>
+              <Typography>User Had Not Made Any Post</Typography>
             )}
           </div>
           {userLoading ? (
@@ -84,16 +101,15 @@ const Account = () => {
                 </Button>
                 <Typography>{user.posts.length}</Typography>
               </div>
-              <Button variant="contained" onClick={handleLogout}>
-                Logout
-              </Button>
-              <NavLink to={"/update/profile"}>Edit Profile</NavLink>
-              <NavLink to={"/update/password"}>Change Password</NavLink>
-              <Button variant="text" sx={{ margin: "2vmax", color: "red" }}
-              onClick={() => toast.error("Sorry ! This Function Is now available right now.We are working on it")}
-              >
-                Delete My Profile
-              </Button>
+              {myProfile ? null : (
+                <Button
+                  variant="contained"
+                  onClick={followHanlder}
+                  style={{ background: following ? "red" : "blue" }}
+                >
+                  {following ? "Unfollow" : "Follow"}
+                </Button>
+              )}
 
               <Dialog
                 open={followersToggle}
@@ -143,4 +159,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default UserProfile;

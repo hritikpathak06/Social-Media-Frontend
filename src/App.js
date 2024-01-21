@@ -10,6 +10,9 @@ import { useSelector } from "react-redux";
 import Home from "./components/Home/Home";
 import Account from "./components/Account/Account";
 import NewPost from "./components/NewPost/NewPost";
+import UpdateProfile from "./components/UpdateProfile/UpdateProfile";
+import UpdatePassword from "./components/UpdatePassword/UpdatePassword";
+import UserProfile from "./components/UserProfile/UserProfile";
 
 const App = () => {
   useEffect(() => {
@@ -25,10 +28,19 @@ const App = () => {
         <Toaster />
         <Routes>
           <Route path="/" element={isAuthenticated ? <Home /> : <Login />} />
-          <Route path="/account" element={isAuthenticated ? <Account /> : <Login />} />
-          <Route path="/newpost" element={isAuthenticated ? <NewPost /> : <Login />} />
-          <Route path="/register" element={<Register/>}/>
-          <Route path="/login" element={<Login/>}/>
+          <Route
+            path="/account"
+            element={isAuthenticated ? <Account /> : <Login />}
+          />
+          <Route
+            path="/newpost"
+            element={isAuthenticated ? <NewPost /> : <Login />}
+          />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/update/profile" element={<UpdateProfile />} />
+          <Route path="/update/password" element={<UpdatePassword />} />
+          <Route path="/user/:id" element={<UserProfile />} />
         </Routes>
       </BrowserRouter>
     </>

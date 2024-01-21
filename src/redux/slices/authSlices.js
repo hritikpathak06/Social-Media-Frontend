@@ -36,7 +36,9 @@ export const getMyProfile = createAsyncThunk("user/profile", async () => {
 
 // Async Thunk For Loggout user
 export const logoutUser = createAsyncThunk("Messages/logout", async () => {
-  const { data } = await axios.get(`${server}/logout`,{withCredentials:true});
+  const { data } = await axios.get(`${server}/logout`, {
+    withCredentials: true,
+  });
   return data;
 });
 
