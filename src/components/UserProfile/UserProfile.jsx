@@ -68,10 +68,13 @@ const UserProfile = () => {
                   ownerImage={post.owner.avatar.url}
                   ownerName={post.owner.name}
                   ownerId={post.owner._id}
+                  createdAt={post.createdAt}
                 />
               ))
             ) : (
-              <Typography>User Had Not Made Any Post</Typography>
+              <Typography variant="h3" sx={{ color: "#fff" }}>
+                {user.name} Had Not Made Any Post
+              </Typography>
             )}
           </div>
           {userLoading ? (
@@ -80,7 +83,7 @@ const UserProfile = () => {
             <div className="accountright">
               <Avatar
                 src={user.avatar.url}
-                sx={{ height: "8vmax", width: "8vmax" }}
+                sx={{ height: "8vmax", width: "8vmax",border:"3px solid blue" }}
               />
               <Typography variant="h4">{user.name}</Typography>
               <div>

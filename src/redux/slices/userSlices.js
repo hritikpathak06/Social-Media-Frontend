@@ -3,8 +3,8 @@ import axios from "axios";
 import { server } from "../../constants/server";
 
 // Async Thunk For Getting All Users
-export const getAllUsers = createAsyncThunk("users/all", async () => {
-  const { data } = await axios.get(`${server}/all/users`, {
+export const getAllUsers = createAsyncThunk("users/all", async (name = "") => {
+  const { data } = await axios.get(`${server}/all/users?name=${name}`, {
     withCredentials: true,
   });
   return data;

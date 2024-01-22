@@ -13,6 +13,7 @@ import NewPost from "./components/NewPost/NewPost";
 import UpdateProfile from "./components/UpdateProfile/UpdateProfile";
 import UpdatePassword from "./components/UpdatePassword/UpdatePassword";
 import UserProfile from "./components/UserProfile/UserProfile";
+import Search from "./components/Search/Search";
 
 const App = () => {
   useEffect(() => {
@@ -36,11 +37,30 @@ const App = () => {
             path="/newpost"
             element={isAuthenticated ? <NewPost /> : <Login />}
           />
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/update/profile" element={<UpdateProfile />} />
-          <Route path="/update/password" element={<UpdatePassword />} />
-          <Route path="/user/:id" element={<UserProfile />} />
+          <Route
+            path="/login"
+            element={isAuthenticated ? <Account /> : <Login />}
+          />
+          <Route
+            path="/register"
+            element={isAuthenticated ? <Account /> : <Register />}
+          />
+          <Route
+            path="/update/profile"
+            element={isAuthenticated ? <UpdateProfile /> : <Login />}
+          />
+          <Route
+            path="/update/password"
+            element={isAuthenticated ? <UpdatePassword /> : <Login />}
+          />
+          <Route
+            path="/user/:id"
+            element={isAuthenticated ? <UserProfile /> : <Login />}
+          />
+          <Route
+            path="/search"
+            element={isAuthenticated ? <Search /> : <Login />}
+          />
         </Routes>
       </BrowserRouter>
     </>

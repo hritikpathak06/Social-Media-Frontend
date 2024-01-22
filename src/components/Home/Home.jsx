@@ -40,10 +40,11 @@ const Home = () => {
                   ownerImage={post.owner.avatar.url}
                   ownerName={post.owner.name}
                   ownerId={post.owner._id}
+                  createdAt={post.createdAt}
                 />
               ))
             ) : (
-              <Typography>No Post Posted By Your Friends</Typography>
+              <Typography variant="h3" sx={{color:"#fff"}}>No Post Posted By Your Friends</Typography>
             )}
           </div>
           <div className="homeright">

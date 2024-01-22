@@ -51,10 +51,11 @@ const Account = () => {
                   ownerId={post.owner._id}
                   isAccount="true"
                   isDeleted="true"
+                  createdAt={post.createdAt}
                 />
               ))
             ) : (
-              <p>sorry</p>
+             <Typography variant="h3" sx={{color:"#fff"}}>Create a post to show Case Your Friends</Typography>
             )}
           </div>
           {userLoading ? (
@@ -63,7 +64,7 @@ const Account = () => {
             <div className="accountright">
               <Avatar
                 src={user.avatar.url}
-                sx={{ height: "8vmax", width: "8vmax" }}
+                sx={{ height: "8vmax", width: "8vmax" ,border:"3px solid blue"}}
               />
               <Typography variant="h4">{user.name}</Typography>
               <div>

@@ -10,7 +10,7 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const [avatar, setAvatar] = useState("https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671159.jpg?size=338&ext=jpg&ga=GA1.1.632798143.1705795200&semt=ais");
 
   const { isAuthenticated, error } = useSelector((state) => state.auth);
 

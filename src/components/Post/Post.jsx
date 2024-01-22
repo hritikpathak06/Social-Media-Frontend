@@ -29,6 +29,7 @@ const Post = ({
   ownerId,
   isDeleted = false,
   isAccount = false,
+  createdAt,
 }) => {
   const [liked, setLiked] = useState(false);
   const [likesUser, setLikesUser] = useState(false);
@@ -39,6 +40,8 @@ const Post = ({
   const dispatch = useDispatch();
   const { message } = useSelector((state) => state.messages);
   const { user } = useSelector((state) => state.auth);
+
+  const formattedDate = new Date(createdAt).toLocaleString();
 
   // Like Or Unlike the posts handler
   const handleLike = async () => {
@@ -94,6 +97,18 @@ const Post = ({
     <>
       <div className="post">
         <div className="postHeader">
+          <Typography
+            fontWeight={100}
+            color={"#000"}
+            style={{
+              alignSelf: "center",
+              marginLeft: "20px",
+              color: "gray",
+              fontWeight: "bolder",
+            }}
+          >
+            {formattedDate}
+          </Typography>
           {isAccount ? (
             <Button onClick={() => setCaptionToggle(true)}>
               <CgMoreVertical />

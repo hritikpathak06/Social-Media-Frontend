@@ -16,6 +16,7 @@ const Login = () => {
     event.preventDefault();
     dispatch(loginUser({ email, password }));
     dispatch(getMyProfile());
+    // window.location.reload();
   };
   useEffect(() => {
     if (isAuthenticated) {

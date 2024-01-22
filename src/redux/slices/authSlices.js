@@ -11,9 +11,10 @@ export const loginUser = createAsyncThunk(
       { email, password },
       { withCredentials: true }
     );
-    return data;
+    return data.user;
   }
 );
+
 
 // Register User
 export const registerUser = createAsyncThunk(
@@ -24,7 +25,7 @@ export const registerUser = createAsyncThunk(
       { name, email, password, avatar },
       { withCredentials: true }
     );
-    return data;
+    return data.user;
   }
 );
 
@@ -124,7 +125,7 @@ const authSlice = createSlice({
       .addCase(logoutUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = null;
-        state.isAuthenticated = true;
+        state.isAuthenticated = false;
         state.error = null;
       })
       .addCase(logoutUser.rejected, (state, action) => {
