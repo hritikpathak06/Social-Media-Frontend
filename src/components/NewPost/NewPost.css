@@ -1,7 +1,8 @@
 .newPost {
     min-height: 100vh;
     /* background-image: linear-gradient(to right, #fff5bc, #cec1ff); */
-    background-image: linear-gradient(120deg,black,gray);
+    /* background-image: linear-gradient(120deg,black,gray); */
+    background: black;
   
     display: flex;
     align-items: center;

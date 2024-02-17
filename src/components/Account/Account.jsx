@@ -81,7 +81,7 @@ const Account = () => {
               </div>
               <div>
                 <Button disabled>
-                  <Typography>Posts</Typography>
+                  <Typography color={"#fff"}>Posts</Typography>
                 </Button>
                 <Typography>{user.posts.length}</Typography>
               </div>

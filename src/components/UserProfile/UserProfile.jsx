@@ -20,7 +20,6 @@ const UserProfile = () => {
   );
   const { user: myself } = useSelector((state) => state.auth);
   const { message } = useSelector((state) => state.caption);
-
   const [followersToggle, setFollowersToggle] = useState(false);
   const [followingToggle, setFollowingToggle] = useState(false);
   const [following, setFollowing] = useState(false);
@@ -83,7 +82,11 @@ const UserProfile = () => {
             <div className="accountright">
               <Avatar
                 src={user.avatar.url}
-                sx={{ height: "8vmax", width: "8vmax",border:"3px solid blue" }}
+                sx={{
+                  height: "8vmax",
+                  width: "8vmax",
+                  border: "3px solid blue",
+                }}
               />
               <Typography variant="h4">{user.name}</Typography>
               <div>
@@ -100,7 +103,7 @@ const UserProfile = () => {
               </div>
               <div>
                 <Button disabled>
-                  <Typography>Posts</Typography>
+                  <Typography color={"white"}>Posts</Typography>
                 </Button>
                 <Typography>{user.posts.length}</Typography>
               </div>

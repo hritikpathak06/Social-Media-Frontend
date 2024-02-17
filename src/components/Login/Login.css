@@ -9,10 +9,15 @@
     padding: 2vmax;
     box-sizing: border-box;
   }
+
+  .__login__title{
+    font-size: 3rem;
+    font-weight: 900;
+  }
   
   .loginForm {
     background-color: white;
-    height: 100%;
+    height: 75%;
     width: 50%;
     border-radius: 30px;
     box-sizing: border-box;

@@ -84,7 +84,6 @@ const Register = () => {
             required
             onChange={(e) => setPassword(e.target.value)}
           />
-          <NavLink to={"/forget/password"}>Forget Password</NavLink>
           <Button type="submit">Register</Button>
           <NavLink to={"/login"}>Already Have an Account??</NavLink>
         </form>

@@ -7,8 +7,8 @@ import toast from "react-hot-toast";
 import { Button } from "@mui/material";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("ritik@gmail.com");
+  const [password, setPassword] = useState("1234567890");
   const { isAuthenticated, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const Login = () => {
     <>
       <div className="login">
         <form action="" className="loginForm" onSubmit={handleLogin}>
-          <h3>Social Media</h3>
+          <h3 className="__login__title">Social Media</h3>
           <input
             type="text"
             placeholder="Enter Your Email"
@@ -46,7 +46,6 @@ const Login = () => {
             required
             onChange={(e) => setPassword(e.target.value)}
           />
-          <NavLink to={"/forget/password"}>Forget Password</NavLink>
           <Button type="submit">Login</Button>
           <NavLink to={"/register"}>Don't Have an account??</NavLink>
         </form>

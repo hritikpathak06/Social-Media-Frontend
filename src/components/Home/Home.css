@@ -7,7 +7,8 @@
   
   .homeleft {
     /* background-image: linear-gradient(to right, #fff5bc, #cec1ff); */
-    background-image: linear-gradient(120deg,black,gray);
+    /* background-image: linear-gradient(120deg,black,gray); */
+    background: black;
   
     overflow-y: auto;
     display: flex;
@@ -20,6 +21,8 @@
     padding: 2vmax;
     box-sizing: border-box;
     overflow-y: auto;
+    /* background-image: linear-gradient(120deg, black, gray); */
+    background: black;
   }
   
   .homeUser {
